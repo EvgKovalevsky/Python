@@ -12,7 +12,7 @@ def Equation(a, b, c):
 	else:
 		D = b**2 - 4*a*c
 		if(D > 0):
-			return (-b + sqrt(D)) / (2 * a), (-b - sqrt(D)) / (2 * a)
+			return "%.2f %.2f"%((-b + sqrt(D)) / (2 * a), (-b - sqrt(D)) / (2 * a))
 		elif (D == 0):
 			return (-b / (2 * a))
 		else:
