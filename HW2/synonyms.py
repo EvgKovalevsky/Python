@@ -1,66 +1,45 @@
-print("Команды:")
-print("ADD arg1 arg2  - добавление слова синонима.")
-print("COUNT arg1     - число синонимов у слова.")
-print("CHECK arg1     - проверка на синонимы")
-print("EXIT           - выход из программы")
-
-
-def _input():
-	s = input("> ")
-	args = s.split()
-	for arg in args:
-		arg.lower()
-	if (args[0] == "add" and len(args) == 3):
-		return args
-	elif (args[0] == "count" and len(args) == 2):
-		return args
-	elif (args[0] == "check" and len(args) == 3):
-		return args
-	elif (args[0] == "exit" and len(args) == 1):
-		return args
+def Add(sl, args):
+	if args[1] in sl.keys():
+		if args[2] not in sl[args[1]]:
+			sl[args[1]].append(args[2])
+		if args[2] in sl.keys():
+			if args[1] not in sl[args[2]]:
+				sl[args[2]].append(args[1])
+		else:
+			sl[args[2]]=[args[1]]
+	elif args[2] in sl.keys():
+		if args[1] not in sl[args[2]]:
+			sl[args[2]].append(args[1])
+		if args[1] in sl.keys():
+			if args[2] not in sl[args[1]]:
+				sl[args[1]].append(args[2])
+		else:
+			sl[args[1]]=[args[2]]
 	else:
-		print("Браток, тут что-то не так. Повтори ввод")
-		return _input()
+		sl[args[1]]=[args[2]]
+		sl[args[2]]=[args[1]]
+	return sl
 
-def Add(sp, args):
-	if (args[1] == args[2]):
-		return sp
-	for spack in sp:
-		if(args[1] in spack and args[2] in spack):
-			return sp
-		elif(args[1] in spack and args[2] not in spack):
-			spack.append(args[2])
-			return sp
-		elif(args[2] in spack and args[1] not in spack):
-			spack.append(args[1])
-			return sp
-	sp.append([args[1], args[2]])
-	return sp
-
-def Count(sp, args):
-	for spack in sp:
-		for word in spack:
-			if(word == args[1]):
-				return len(spack) - 1
+def Count(sl, args):
+	if args[1] in sl.keys():
+		return len(sl[args[1]])
 	return 0
 
 def Check(sp, args):
-	if (args[1] == args[2]):
+	if args[1] == args[2]:
 		return ""
-	for spack in sp:
-		if(args[1] in spack and args[2] in spack):
-			return "YES"
+	if args[1] in sl.keys() and args[2] in sl[args[1]]:
+		return "YES"
 	return "NO"
 
-sp = []
-while True:
-	args = _input();
-	if (args[0] == "add"):
-		sp = Add(sp, args)
-		print(sp)
-	elif (args[0] == "count"):
-		print(Count(sp, args))
-	elif (args[0] == "check"):
-		print(Check(sp, args))
-	elif (args[0] == "exit"):
-		break
+sl = {}
+
+for i in range(0, int(input("Кол-во запросов: "))):
+	args = (input("> ")).split()
+	args = [arg.lower() for arg in args]
+	if args[0] == "add":
+		Add(sl, args)
+	if args[0] == "count":
+		print(Count(sl, args))
+	if args[0] == "check":
+		print(Check(sl, args))
