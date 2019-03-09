@@ -26,8 +26,6 @@ def Count(sl, args):
 	return 0
 
 def Check(sp, args):
-	if args[1] == args[2]:
-		return ""
 	if args[1] in sl.keys() and args[2] in sl[args[1]]:
 		return "YES"
 	return "NO"
