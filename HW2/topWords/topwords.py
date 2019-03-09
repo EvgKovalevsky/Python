@@ -25,7 +25,7 @@ def parse_archives(tmppath):
             data = json.loads(line)
             if data["body"] != "[deleted]":
                 for word in re.findall(r"[\w']+", data["body"]):
-                    if len(word) >= 3 and word not in word_dict.keys():
+                    if len(word) >= 4 and word not in word_dict.keys():
                         word_dict[word] = 1
                     elif len(word) >= 3:
                         word_dict[word] += 1
